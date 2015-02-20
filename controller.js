@@ -8,5 +8,20 @@ app.controller('PostsController', function($scope, FirebaseService) {
       });
   }
   getPosts();
+  
+  $scope.addPost = function() {
+      FirebaseService.postData($scope.newPost).then(function(res){
+          getPosts();
+          $scope.resetForm();
+      });
+  };
+  
+  $scope.resetForm = function() {
+      $scope.newPost = {};
+  }
+  
+  setInterval(function(){
+      getPosts();
+  }, 1500);
     
 });
