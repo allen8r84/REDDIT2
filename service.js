@@ -33,5 +33,20 @@ app.service('FirebaseService', function($http, $q) {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
       s4() + '-' + s4() + s4() + s4();
   }
+  
+  this.vote = function(postId, direction, karma) {
+      if(direction === 'up') {
+          karma++;
+      } else if(direction === 'down'){
+          karma--;
+      } else {
+        console.log("karma isn't working");  
+      };
+      var deferred = $q.defer();
+      $http.patch('https://devmtn.firebaseio.com/posts/' + postId + '.json', {'karma':karma}).then(function(res) {
+          deferred.resolve(res);
+      });
+      return deferred.promise;
+  };
     
 });
